@@ -5,7 +5,7 @@ const categories = [
   {
     name: "branding",
     folder: "branding",
-    prefix: "branding ",
+    prefix: "branding_",
     label: "BRANDING",
     count: 6,
     title: "Football Branding"
@@ -13,15 +13,15 @@ const categories = [
   {
     name: "posters",
     folder: "posters",
-    prefix: "poster ",
+    prefix: "poster_",
     label: "POSTERS",
     count: 15,
     title: "Football Poster"
   },
   {
     name: "social-media",
-    folder: "social-media",
-    prefix: "social ",
+    folder: "social media",
+    prefix: "social_",
     label: "SOCIAL MEDIA",
     count: 6,
     title: "Social Media Design"
@@ -29,7 +29,7 @@ const categories = [
   {
     name: "statistics",
     folder: "statistics",
-    prefix: "statistics ",
+    prefix: "statistics_",
     label: "STATISTICS",
     count: 5,
     title: "Football Statistics"
@@ -37,7 +37,7 @@ const categories = [
   {
     name: "thumbnails",
     folder: "thumbnails",
-    prefix: "thumbnail ",
+    prefix: "thumbnail_",
     label: "THUMBNAILS",
     count: 8,
     title: "Football Thumbnail"
@@ -81,14 +81,12 @@ filters.forEach(filter => {
     const selectedCategory = filter.dataset.filter;
 
     document.querySelectorAll(".project").forEach(project => {
-      if (
+      project.style.display =
         selectedCategory === "all" ||
         project.dataset.category === selectedCategory
-      ) {
-        project.style.display = "block";
-      } else {
-        project.style.display = "none";
-      }
+          ? "block"
+          : "none";
     });
+
   });
 });
