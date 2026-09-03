@@ -1,92 +1,142 @@
 const projectsContainer = document.getElementById("projects");
 const filters = document.querySelectorAll(".filter");
 
-const categories = [
-  {
-    name: "branding",
+const projects = [
+  // BRANDING
+  ...Array.from({ length: 6 }, (_, i) => ({
+    category: "branding",
     folder: "branding",
-    prefix: "branding_",
+    file: `branding ${i + 1}.jpg`,
     label: "BRANDING",
-    count: 6,
-    title: "Football Branding"
-  },
-  {
-    name: "posters",
+    title: `Football Branding ${i + 1}`
+  })),
+
+  // POSTERS
+  ...Array.from({ length: 15 }, (_, i) => ({
+    category: "posters",
     folder: "posters",
-    prefix: "poster_",
+    file: `posters ${i + 1}.jpg`,
     label: "POSTERS",
-    count: 15,
-    title: "Football Poster"
-  },
-  {
-    name: "social-media",
+    title: `Football Poster ${i + 1}`
+  })),
+
+  // SOCIAL MEDIA
+  ...Array.from({ length: 6 }, (_, i) => ({
+    category: "social-media",
     folder: "social media",
-    prefix: "social_",
+    file: `social media ${i + 1}.jpg`,
     label: "SOCIAL MEDIA",
-    count: 6,
-    title: "Social Media Design"
-  },
-  {
-    name: "statistics",
+    title: `Social Media Design ${i + 1}`
+  })),
+
+  // STATISTICS
+  ...Array.from({ length: 5 }, (_, i) => ({
+    category: "statistics",
     folder: "statistics",
-    prefix: "statistics_",
+    file: `statistics ${i + 1}.jpg`,
     label: "STATISTICS",
-    count: 5,
-    title: "Football Statistics"
+    title: `Football Statistics ${i + 1}`
+  })),
+
+  // THUMBNAILS
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 1.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 1"
   },
   {
-    name: "thumbnails",
+    category: "thumbnails",
     folder: "thumbnails",
-    prefix: "thumbnail_",
+    file: "thumbnails 2.jpg",
     label: "THUMBNAILS",
-    count: 8,
-    title: "Football Thumbnail"
+    title: "Football Thumbnail 2"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 3.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 3"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnail 4.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 4"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 5.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 5"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 6.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 6"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 7.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 7"
+  },
+  {
+    category: "thumbnails",
+    folder: "thumbnails",
+    file: "thumbnails 8.jpg",
+    label: "THUMBNAILS",
+    title: "Football Thumbnail 8"
   }
 ];
 
-categories.forEach(category => {
-  for (let i = 1; i <= category.count; i++) {
+projects.forEach(projectData => {
+  const project = document.createElement("article");
 
-    const project = document.createElement("article");
-    project.className = "project";
-    project.dataset.category = category.name;
+  project.className = "project";
+  project.dataset.category = projectData.category;
 
-    const imageName = `${category.prefix}${i}.jpg`;
+  project.innerHTML = `
+    <div class="project-image">
+      <img
+        src="${projectData.folder}/${projectData.file}"
+        alt="${projectData.title}"
+        loading="lazy"
+      >
+    </div>
 
-    project.innerHTML = `
-      <div class="project-image">
-        <img
-          src="${category.folder}/${imageName}"
-          alt="${category.title} ${i}"
-          loading="lazy"
-        >
-      </div>
+    <div class="project-info">
+      <p>${projectData.label}</p>
+      <h3>${projectData.title}</h3>
+    </div>
+  `;
 
-      <div class="project-info">
-        <p>${category.label}</p>
-        <h3>${category.title} ${String(i).padStart(2, "0")}</h3>
-      </div>
-    `;
-
-    projectsContainer.appendChild(project);
-  }
+  projectsContainer.appendChild(project);
 });
 
 filters.forEach(filter => {
   filter.addEventListener("click", () => {
-
     filters.forEach(button => button.classList.remove("active"));
     filter.classList.add("active");
 
     const selectedCategory = filter.dataset.filter;
 
     document.querySelectorAll(".project").forEach(project => {
-      project.style.display =
+      if (
         selectedCategory === "all" ||
         project.dataset.category === selectedCategory
-          ? "block"
-          : "none";
+      ) {
+        project.style.display = "block";
+      } else {
+        project.style.display = "none";
+      }
     });
-
   });
 });
