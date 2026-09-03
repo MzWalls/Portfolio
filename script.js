@@ -56,7 +56,7 @@ categories.forEach(category => {
     project.innerHTML = `
       <div class="project-image">
         <img
-          src="images/${category.folder}/${imageName}"
+          src="${category.folder}/${imageName}"
           alt="${category.title} ${i}"
           loading="lazy"
         >
