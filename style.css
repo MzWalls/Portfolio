@@ -549,4 +549,18 @@ footer a:hover {
   footer {
     padding: 25px 20px;
   }
+  .project-image {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  position: relative;
+  background: #111;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 }
