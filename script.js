@@ -1,26 +1,96 @@
+const projectsContainer = document.getElementById("projects");
 const filters = document.querySelectorAll(".filter");
-const projects = document.querySelectorAll(".project");
+
+const categories = [
+  {
+    name: "branding",
+    folder: "branding",
+    prefix: "branding",
+    label: "BRANDING",
+    count: 6,
+    title: "Football Branding"
+  },
+  {
+    name: "posters",
+    folder: "posters",
+    prefix: "poster",
+    label: "POSTERS",
+    count: 15,
+    title: "Football Poster"
+  },
+  {
+    name: "social-media",
+    folder: "social-media",
+    prefix: "social",
+    label: "SOCIAL MEDIA",
+    count: 6,
+    title: "Social Media Design"
+  },
+  {
+    name: "statistics",
+    folder: "statistics",
+    prefix: "statistics",
+    label: "STATISTICS",
+    count: 5,
+    title: "Football Statistics"
+  },
+  {
+    name: "thumbnails",
+    folder: "thumbnails",
+    prefix: "thumbnail ",
+    label: "THUMBNAILS",
+    count: 8,
+    title: "Football Thumbnail"
+  }
+];
+
+categories.forEach(category => {
+  for (let i = 1; i <= category.count; i++) {
+
+    const project = document.createElement("article");
+    project.className = "project";
+    project.dataset.category = category.name;
+
+    const imageName = `${category.prefix}${i}.jpg`;
+
+    project.innerHTML = `
+      <div class="project-image">
+        <img
+          src="images/${category.folder}/${imageName}"
+          alt="${category.title} ${i}"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="project-info">
+        <p>${category.label}</p>
+        <h3>${category.title} ${String(i).padStart(2, "0")}</h3>
+      </div>
+    `;
+
+    projectsContainer.appendChild(project);
+  }
+});
 
 filters.forEach(filter => {
   filter.addEventListener("click", () => {
 
-    // Remove active from all buttons
-    filters.forEach(btn => btn.classList.remove("active"));
-
-    // Add active to clicked button
+    filters.forEach(button => button.classList.remove("active"));
     filter.classList.add("active");
 
-    const category = filter.dataset.filter;
+    const selectedCategory = filter.dataset.filter;
 
-    projects.forEach(project => {
+    document.querySelectorAll(".project").forEach(project => {
 
-      if (category === "all" || project.dataset.category === category) {
+      if (
+        selectedCategory === "all" ||
+        project.dataset.category === selectedCategory
+      ) {
         project.style.display = "block";
       } else {
         project.style.display = "none";
       }
 
     });
-
   });
 });
