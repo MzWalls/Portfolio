@@ -2,7 +2,6 @@ const projectsContainer = document.getElementById("projects");
 const filters = document.querySelectorAll(".filter");
 
 const projects = [
-  // BRANDING
   ...Array.from({ length: 6 }, (_, i) => ({
     category: "branding",
     folder: "branding",
@@ -11,7 +10,6 @@ const projects = [
     title: `Football Branding ${i + 1}`
   })),
 
-  // POSTERS
   ...Array.from({ length: 15 }, (_, i) => ({
     category: "posters",
     folder: "posters",
@@ -20,7 +18,6 @@ const projects = [
     title: `Football Poster ${i + 1}`
   })),
 
-  // SOCIAL MEDIA
   ...Array.from({ length: 6 }, (_, i) => ({
     category: "social-media",
     folder: "social media",
@@ -29,7 +26,6 @@ const projects = [
     title: `Social Media Design ${i + 1}`
   })),
 
-  // STATISTICS
   ...Array.from({ length: 5 }, (_, i) => ({
     category: "statistics",
     folder: "statistics",
@@ -38,66 +34,17 @@ const projects = [
     title: `Football Statistics ${i + 1}`
   })),
 
-  // THUMBNAILS
-  {
+  ...Array.from({ length: 8 }, (_, i) => ({
     category: "thumbnails",
     folder: "thumbnails",
-    file: "thumbnails 1.jpg",
+    file: `thumbnails ${i + 1}.jpg`,
     label: "THUMBNAILS",
-    title: "Football Thumbnail 1"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 2.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 2"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 3.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 3"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnail 4.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 4"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 5.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 5"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 6.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 6"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 7.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 7"
-  },
-  {
-    category: "thumbnails",
-    folder: "thumbnails",
-    file: "thumbnails 8.jpg",
-    label: "THUMBNAILS",
-    title: "Football Thumbnail 8"
-  }
+    title: `Football Thumbnail ${i + 1}`
+  }))
 ];
 
 projects.forEach(projectData => {
+
   const project = document.createElement("article");
 
   project.className = "project";
@@ -121,14 +68,25 @@ projects.forEach(projectData => {
   projectsContainer.appendChild(project);
 });
 
+
+/* =========================
+   FILTERS
+========================= */
+
 filters.forEach(filter => {
+
   filter.addEventListener("click", () => {
-    filters.forEach(button => button.classList.remove("active"));
+
+    filters.forEach(button => {
+      button.classList.remove("active");
+    });
+
     filter.classList.add("active");
 
     const selectedCategory = filter.dataset.filter;
 
     document.querySelectorAll(".project").forEach(project => {
+
       if (
         selectedCategory === "all" ||
         project.dataset.category === selectedCategory
@@ -137,6 +95,87 @@ filters.forEach(filter => {
       } else {
         project.style.display = "none";
       }
+
     });
+
   });
+
 });
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+const lightbox = document.createElement("div");
+
+lightbox.className = "lightbox";
+
+lightbox.innerHTML = `
+  <button class="lightbox-close">&times;</button>
+
+  <img class="lightbox-image" src="" alt="">
+
+  <div class="lightbox-title"></div>
+`;
+
+document.body.appendChild(lightbox);
+
+const lightboxImage = lightbox.querySelector(".lightbox-image");
+const lightboxTitle = lightbox.querySelector(".lightbox-title");
+const lightboxClose = lightbox.querySelector(".lightbox-close");
+
+
+/* OPEN IMAGE */
+
+document.querySelectorAll(".project-image img").forEach(image => {
+
+  image.addEventListener("click", () => {
+
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
+    lightboxTitle.textContent = image.alt;
+
+    lightbox.classList.add("active");
+
+    document.body.style.overflow = "hidden";
+
+  });
+
+});
+
+
+/* CLOSE BUTTON */
+
+lightboxClose.addEventListener("click", closeLightbox);
+
+
+/* CLICK OUTSIDE IMAGE */
+
+lightbox.addEventListener("click", event => {
+
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+
+});
+
+
+/* ESC KEY */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+    closeLightbox();
+  }
+
+});
+
+
+function closeLightbox() {
+
+  lightbox.classList.remove("active");
+
+  document.body.style.overflow = "";
+
+}
